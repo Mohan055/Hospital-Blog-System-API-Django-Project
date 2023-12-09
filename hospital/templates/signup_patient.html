@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Custom CSS for additional styling */
+     .container{
+        
+        margin-top: 10px ;
+        
+     }
+
+    .sign-form {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-center mb-4">Patient Signup</h2>
+            <div class="sign-form">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock%}
