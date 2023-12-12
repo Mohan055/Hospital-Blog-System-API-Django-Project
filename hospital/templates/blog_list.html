@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        
+        }
+        a:hover {
+            background-color: #f0f0f0;
+        }
+        .category-select {
+            margin-bottom: 20px;
+        }
+
+        .blog-title {
+            color: #4f4f4f;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'hospitalapp:blog_list' %}">Doctor's Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'hospitalapp:patient_dashboard' %}">Your Dashboard</a>
+                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'hospitalapp:user_logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <h2 style="color:#4f4f4f">Blogs Categories: </h2>
+   
+    <hr>
+    <select class="category-select" onchange="showCategory(this)">
+        <option value="" disabled selected>Select a Category</option>
+        <option value="Mental Health">Mental Health</option>
+        <option value="Heart Disease">Heart Disease</option>
+        <option value="Covid19">Covid19</option>
+        <option value="Immunization">Immunization</option>
+    </select>
+
+    <div id="Mental Health" class="category-content" style="display: none;">
+        <h2 class="blog-title">Mental Health</h2>
+        {% for blogs in all_blogs %}
+            {% if blogs.draft == False and blogs.id and blogs.category == 'Mental Health' %}
+                <ul>
+                    <a href="{% url 'hospitalapp:blog_detail' blog_id=blogs.id %}">{{ blogs.title }}</a>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="Heart Disease" class="category-content" style="display: none;">
+        <h2 class="blog-title">Heart Disease</h2>
+        {% for blogs in all_blogs %}
+            {% if blogs.draft == False and blogs.id and blogs.category == 'Heart Disease' %}
+                <ul>
+                    <a href="{% url 'hospitalapp:blog_detail' blog_id=blogs.id %}">{{ blogs.title }}</a>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="Covid19" class="category-content" style="display: none;">
+        <h2 class="blog-title">Covid19</h2>
+        {% for blogs in all_blogs %}
+            {% if blogs.draft == False and blogs.id and blogs.category == 'Covid19' %}
+                <ul>
+                    <a href="{% url 'hospitalapp:blog_detail' blog_id=blogs.id %}">{{ blogs.title }}</a>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="Immunization" class="category-content" style="display: none;">
+        <h2 class="blog-title">Immunization</h2>
+        {% for blogs in all_blogs %}
+            {% if blogs.draft == False and blogs.id and blogs.category == 'Immunization' %}
+                <ul>
+                    <a href="{% url 'hospitalapp:blog_detail' blog_id=blogs.id %}">{{ blogs.title }}</a>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <script>
+        function showCategory(select) {
+            var selectedCategory = select.value;
+            var categoryContents = document.querySelectorAll('.category-content');
+            
+            for (var i = 0; i < categoryContents.length; i++) {
+                categoryContents[i].style.display = 'none';
+            }
+            
+            if (selectedCategory !== '') {
+                document.getElementById(selectedCategory).style.display = 'block';
+            }
+        }
+    </script>
+    
+</body>
+</html>
